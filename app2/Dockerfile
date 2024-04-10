@@ -16,5 +16,5 @@ COPY . .
 CMD opentelemetry-instrument \
     --logs_exporter console,otlp \
     uvicorn app.app:app \
-    --port 8001 \
+    --port 8002 \
     --host 0.0.0.0

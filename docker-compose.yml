@@ -5,6 +5,8 @@ services:
       POSTGRES_DB: app_db
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: app_password
+    ports:
+      - 5432:5432
 
   app1:
     build: "app1/."

@@ -28,7 +28,7 @@ class PessoaOut(PessoaIn):
 async def get_user(user_id: int):
     async with httpx.AsyncClient() as client:
         logger.info('Requisitando app1')
-        response = await client.get(f'http://app1:8002/user/{user_id}')
+        response = await client.get(f'http://app1:8001/user/{user_id}')
 
         return response.json()
 
@@ -37,7 +37,7 @@ async def get_user(user_id: int):
 async def get_users():
     async with httpx.AsyncClient() as client:
         logger.info('Requisitando app1')
-        response = await client.get('http://app1:8002/user')
+        response = await client.get('http://app1:8001/user')
 
     return response.json()
 
@@ -47,7 +47,7 @@ async def create_user(user: PessoaIn):
     async with httpx.AsyncClient() as client:
         logger.info('Requisitando app1')
         response = await client.post(
-            'http://app1:8002/user', json=user.model_dump()
+            'http://app1:8001/user', json=user.model_dump()
         )
 
         return response.json()

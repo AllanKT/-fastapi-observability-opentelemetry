@@ -17,3 +17,4 @@ class Pessoa:
     created_at: Mapped[datetime] = mapped_column(
         init=False, insert_default=func.now()
     )
+

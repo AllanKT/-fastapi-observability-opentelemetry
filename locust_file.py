@@ -7,6 +7,12 @@ Como rodar:
 from locust import HttpUser, between, task
 
 
+tokens: dict = {
+    'user1': 'eyJ1c2VyIjogImFsbGFuIiwgImNvbXBhbnkiOiAidGVzdGUiLCAidXNlcl9pZCI6IDF9',
+    'user2': 'eyJ1c2VyIjogImZ1bGFubyIsICJjb21wYW55IjogImNvY2EgY29sYSIsICJ1c2VyX2lkIjogMn0=',
+    'user3': 'eyJ1c2VyIjogImNpY2xhbm8iLCAiY29tcGFueSI6ICJncm93dGgiLCAidXNlcl9pZCI6IDN9',
+}
+
 class LoadTest(HttpUser):
     wait_time = between(1, 5)
 
