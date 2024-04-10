@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+
+  app1:
+    build: "app1/."
+    depends_on:
+      - olgtm
+      - postgres
+    environment:
+      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://olgtm:4317
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_SERVICE_NAME=app1
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
+      - COLLECTOR_OTLP_ENABLED=true
+      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
+    ports:
+      - 8001:8001
+
+  app2:
+    build: "app2/."
+    depends_on:
+      - olgtm
+      - app1
+    environment:
+      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://olgtm:4317
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_SERVICE_NAME=app2
+      - OTEL_METRIC_EXPORT_INTERVAL=1000
+      - COLLECTOR_OTLP_ENABLED=true
+      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
+    ports:
+      - 8002:8002
+
+  olgtm:
+    image: grafana/otel-lgtm
+    ports:
+      - 3000:3000
+      - 9090:9090
+      - 4318:4318
+      - 4317:4317
