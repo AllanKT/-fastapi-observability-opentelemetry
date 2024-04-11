@@ -65,6 +65,9 @@ async def get_users(
     offset: int = Query(default=0),
     session: AsyncSession = Depends(get_session),
 ):
+    print(requests)
+    print(requests.headers.get('teste'))
+    print(requests.headers.get('teste2'))
     logger.debug("get_users teste2", extra={"request": requests})
     result = await session.scalars(select(Pessoa).limit(limit).offset(offset))
     return result.all()

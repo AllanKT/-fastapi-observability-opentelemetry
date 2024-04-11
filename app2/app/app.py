@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import httpx
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
 # from .mid import MetricsMeddleware
@@ -34,10 +34,15 @@ async def get_user(user_id: int):
 
 
 @app.get('/user')
-async def get_users():
-    async with httpx.AsyncClient() as client:
+async def get_users(requests: Request):
+    print({k: v for k, v in requests.headers.items()})
+    async with httpx.AsyncClient(
+        headers={k: v for k, v in requests.headers.items() if k in ['teste', 'teste2']}
+    ) as client:
         logger.info('Requisitando app1')
-        response = await client.get('http://app1:8001/user')
+        response = await client.get(
+            'http://app1:8001/user'
+        )
 
     return response.json()
 
